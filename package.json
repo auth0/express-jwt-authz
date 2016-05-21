@@ -1,0 +1,28 @@
+{
+  "name": "express-jwt-authz",
+  "version": "1.0.0",
+  "description": "Validate a JWTs scope to authorize access to an endpoint",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/auth0/express-jwt-authz.git"
+  },
+  "keywords": [
+    "express",
+    "jwt",
+    "authorization"
+  ],
+  "author": "Damian Schenkelman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/auth0/express-jwt-authz/issues"
+  },
+  "homepage": "https://github.com/auth0/express-jwt-authz#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
