@@ -8,7 +8,7 @@ describe('should error', function(){
   });
 });
 
-describe('should 401 and "Insufficient scope"', function(){
+describe('should 403 and "Insufficient scope"', function(){
   function createResponse(){
     var params = {};
 
@@ -18,7 +18,7 @@ describe('should 401 and "Insufficient scope"', function(){
         params.message = message;
       },
       assert: function(){
-        expect(params.code).to.equal(401);
+        expect(params.code).to.equal(403);
         expect(params.message).to.equal('Insufficient scope');
       }
     };
