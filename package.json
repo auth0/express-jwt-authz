@@ -1,6 +1,6 @@
 {
   "name": "express-jwt-authz",
-  "version": "1.0.0",
+  "version": "2.0.0-alpha.1",
   "description": "Validate a JWTs scope to authorize access to an endpoint",
   "main": "lib/index.js",
   "scripts": {
@@ -22,7 +22,18 @@
   },
   "homepage": "https://github.com/auth0/express-jwt-authz#readme",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^2.4.5"
+    "chai": "^4.2.0",
+    "husky": "^1.1.2",
+    "mocha": "^5.2.0",
+    "prettier": "^1.14.3",
+    "pretty-quick": "^1.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "peerDependencies": {
+    "express": "^4.0.0"
   }
 }
