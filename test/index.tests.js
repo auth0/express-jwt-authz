@@ -15,9 +15,13 @@ describe('should 401 and "Insufficient scope"', () => {
     const params = {};
 
     return {
-      send(code, message) {
+      status(code) {
         params.code = code;
-        params.message = message;
+        return {
+          send(message) {
+            params.message = message;
+          }
+        };
       },
       assert() {
         expect(params.code).to.equal(401);
