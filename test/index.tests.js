@@ -1,8 +1,8 @@
-var expect = require('chai').expect;
-var jwtAuthz = require('../lib');
+const expect = require('chai').expect;
+const jwtAuthz = require('../lib');
 
-describe('should error', function() {
-  it('when expectedScopes is not array', function() {
+describe('should error', () => {
+  it('when expectedScopes is not array', () => {
     expect(jwtAuthz).to.throw(
       Error,
       /^Parameter expectedScopes must be an array of strings representing the scopes for the endpoint\(s\)$/
@@ -10,81 +10,81 @@ describe('should error', function() {
   });
 });
 
-describe('should 401 and "Insufficient scope"', function() {
+describe('should 401 and "Insufficient scope"', () => {
   function createResponse() {
-    var params = {};
+    const params = {};
 
     return {
-      send: function(code, message) {
+      send(code, message) {
         params.code = code;
         params.message = message;
       },
-      assert: function() {
+      assert() {
         expect(params.code).to.equal(401);
         expect(params.message).to.equal('Insufficient scope');
       }
     };
   }
 
-  it('when scope in user does not match expectedScopes', function() {
-    var expectedScopes = ['read:user'];
-    var req = {
+  it('when scope in user does not match expectedScopes', () => {
+    const expectedScopes = ['read:user'];
+    const req = {
       user: {
         scope: ''
       }
     };
 
-    var params = {};
+    const params = {};
 
-    var res = createResponse();
+    const res = createResponse();
 
     jwtAuthz(expectedScopes)(req, res);
 
     res.assert();
   });
 
-  it('when scope in user does not exist and expectedScopes are not empty', function() {
-    var expectedScopes = ['read:user'];
-    var req = {
+  it('when scope in user does not exist and expectedScopes are not empty', () => {
+    const expectedScopes = ['read:user'];
+    const req = {
       user: {}
     };
 
-    var res = createResponse();
+    const res = createResponse();
     jwtAuthz(expectedScopes)(req, res);
 
     res.assert();
   });
 
-  it('when user does not exist and expectedScopes are not empty', function() {
-    var expectedScopes = ['read:user'];
-    var req = {};
+  it('when user does not exist and expectedScopes are not empty', () => {
+    const expectedScopes = ['read:user'];
+    const req = {};
 
-    var res = createResponse();
+    const res = createResponse();
     jwtAuthz(expectedScopes)(req, res);
 
     res.assert();
   });
 
-  it('when scope in user is not string and expectedScopes are not empty', function() {
-    var expectedScopes = ['read:user'];
-    var req = {
+  it('when scope in user is not string and expectedScopes are not empty', () => {
+    const expectedScopes = ['read:user'];
+    const req = {
       user: {}
     };
 
-    var res = createResponse();
+    const res = createResponse();
     jwtAuthz(expectedScopes)(req, res);
 
     res.assert();
   });
 });
 
-describe('should call next', function() {
-  it('when expectedScopes is empty', function(done) {
+describe('should call next', () => {
+  it('when expectedScopes is empty', done => {
     jwtAuthz([])(null, null, done);
   });
 
-  it('when scope in user has one of expectedScopes', function(done) {
-    var req = {
+  it('when scope in user has one of expectedScopes', done => {
+    const req = {
       user: {
         scope: 'write:user read:user'
       }
