@@ -22,10 +22,14 @@ app.get('/users',
   function(req, res) { ... });
 ```
 
-The JWT must have a `scope` claim and it must be a string that specifies permissions separated by spaces. For example:
+The JWT must have a `scope` claim and it must be an array or string that specifies permissions separated by spaces. For example:
 
 ```
-"write:users read:users"
+// string:
+"write:users read:users";
+
+// array
+["write:users", "read:users"]
 ```
 
 ## Issue Reporting
