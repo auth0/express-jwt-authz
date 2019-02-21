@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const jwtAuthz = require('../lib');
+const boom = require('boom');
 
 describe('should error', () => {
   it('when expectedScopes is not array', () => {
@@ -45,6 +46,21 @@ describe('should 403 and "Insufficient scope"', () => {
     jwtAuthz(expectedScopes)(req, res);
 
     res.assert();
+  });
+
+  it('by calling the next() callback, when scope in user does not match expectedScopes, and options.failWithError=true', done => {
+    const expectedScopes = ['read:user'];
+    const req = {
+      user: {
+        scope: ''
+      }
+    };
+    jwtAuthz(expectedScopes, { failWithError: true })(req, null, error => {
+      expect(boom.isBoom(error)).to.be.true;
+      expect(error.output.statusCode).to.equal(403);
+      expect(error.output.payload.message).to.equal('Insufficient scope');
+      done();
+    });
   });
 
   it('when scope in user does not exist and expectedScopes are not empty', () => {
