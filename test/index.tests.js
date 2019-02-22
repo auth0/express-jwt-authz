@@ -47,6 +47,21 @@ describe('should 403 and "Insufficient scope"', () => {
     res.assert();
   });
 
+  it('by calling the next() callback, when scope in user does not match expectedScopes, and options.failWithError=true', done => {
+    const expectedScopes = ['read:user'];
+    const req = {
+      user: {
+        scope: ''
+      }
+    };
+    jwtAuthz(expectedScopes, { failWithError: true })(req, null, error => {
+      expect(error.statusCode).to.equal(403);
+      expect(error.message).to.equal('Insufficient scope');
+      expect(error.error).to.equal('Forbidden');
+      done();
+    });
+  });
+
   it('when scope in user does not exist and expectedScopes are not empty', () => {
     const expectedScopes = ['read:user'];
     const req = {
