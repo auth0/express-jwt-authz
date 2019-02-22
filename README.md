@@ -16,9 +16,10 @@ Use together with [express-jwt](https://github.com/auth0/express-jwt) to both va
 var jwt = require('express-jwt');
 var jwtAuthz = require('express-jwt-authz');
 
+var options = {};
 app.get('/users',
   jwt({ secret: 'shared_secret' }),
-  jwtAuthz([ 'read:users' ]),
+  jwtAuthz([ 'read:users' ], options),
   function(req, res) { ... });
 ```
 
@@ -27,6 +28,10 @@ The JWT must have a `scope` claim and it must be a string that specifies permiss
 ```
 "write:users read:users"
 ```
+
+## Options
+
+- `failWithError`: When set to `true`, will forward errors to `next` instead of ending the response directly. Defaults to `false`.
 
 ## Issue Reporting
 

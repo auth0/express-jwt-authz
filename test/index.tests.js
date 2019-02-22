@@ -47,7 +47,7 @@ describe('should 403 and "Insufficient scope"', () => {
     res.assert();
   });
 
-  it('by calling the next() callback, when scope in user does not match expectedScopes, and options.failWithError=true', done => {
+  it('by calling the next() callback, when scope in user does not match expectedScopes and `options.failWithError` is `true`', done => {
     const expectedScopes = ['read:user'];
     const req = {
       user: {
