@@ -26,8 +26,7 @@
     "husky": "^1.1.2",
     "mocha": "^5.2.0",
     "prettier": "^1.14.3",
-    "pretty-quick": "^1.8.0",
-    "boom": "^7.3.0"
+    "pretty-quick": "^1.8.0"
   },
   "husky": {
     "hooks": {
@@ -39,8 +38,5 @@
   },
   "peerDependencies": {
     "express": "^4.0.0"
-  },
-  "dependencies": {
-    "boom": "^7.3.0"
   }
 }

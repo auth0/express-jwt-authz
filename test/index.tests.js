@@ -1,6 +1,5 @@
 const expect = require('chai').expect;
 const jwtAuthz = require('../lib');
-const boom = require('boom');
 
 describe('should error', () => {
   it('when expectedScopes is not array', () => {
@@ -56,9 +55,9 @@ describe('should 403 and "Insufficient scope"', () => {
       }
     };
     jwtAuthz(expectedScopes, { failWithError: true })(req, null, error => {
-      expect(boom.isBoom(error)).to.be.true;
-      expect(error.output.statusCode).to.equal(403);
-      expect(error.output.payload.message).to.equal('Insufficient scope');
+      expect(error.statusCode).to.equal(403);
+      expect(error.message).to.equal('Insufficient scope');
+      expect(error.error).to.equal('Forbidden');
       done();
     });
   });
