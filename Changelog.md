@@ -1,3 +1,7 @@
+# 2.1.1
+
+- Add `WWW-Authenticate` header when authentication fails
+
 # 2.1.0
 
 - Added option `failWithError` to call next() when scope is insufficient
