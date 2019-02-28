@@ -11,8 +11,10 @@ describe('should error', () => {
 });
 
 describe('should 403 and "Insufficient scope"', () => {
-  function createResponse() {
+  function createResponse(expectedScopes = []) {
     const params = {};
+    let header;
+    let content;
 
     return {
       status(code) {
@@ -23,9 +25,17 @@ describe('should 403 and "Insufficient scope"', () => {
           }
         };
       },
+      append(_header, _content) {
+        header = _header;
+        content = _content;
+      },
       assert() {
         expect(params.code).to.equal(403);
         expect(params.message).to.equal('Insufficient scope');
+        expect(header).to.equal('WWW-Authenticate');
+        expect(content.split('scope="')[1].split('"')[0]).to.equal(
+          expectedScopes.join(' ')
+        );
       }
     };
   }
@@ -40,7 +50,7 @@ describe('should 403 and "Insufficient scope"', () => {
 
     const params = {};
 
-    const res = createResponse();
+    const res = createResponse(expectedScopes);
 
     jwtAuthz(expectedScopes)(req, res);
 
@@ -68,7 +78,7 @@ describe('should 403 and "Insufficient scope"', () => {
       user: {}
     };
 
-    const res = createResponse();
+    const res = createResponse(expectedScopes);
     jwtAuthz(expectedScopes)(req, res);
 
     res.assert();
@@ -78,7 +88,7 @@ describe('should 403 and "Insufficient scope"', () => {
     const expectedScopes = ['read:user'];
     const req = {};
 
-    const res = createResponse();
+    const res = createResponse(expectedScopes);
     jwtAuthz(expectedScopes)(req, res);
 
     res.assert();
@@ -90,7 +100,7 @@ describe('should 403 and "Insufficient scope"', () => {
       user: {}
     };
 
-    const res = createResponse();
+    const res = createResponse(expectedScopes);
     jwtAuthz(expectedScopes)(req, res);
 
     res.assert();
