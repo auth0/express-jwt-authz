@@ -1,3 +1,8 @@
+# 2.2.0
+
+- Added support for array scopes
+- Added option `checkAllScopes` to check that all the required scopes are allowed
+
 # 2.1.1
 
 - Add `WWW-Authenticate` header when authentication fails
