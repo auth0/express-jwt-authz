@@ -48,8 +48,6 @@ describe('should 403 and "Insufficient scope"', () => {
       }
     };
 
-    const params = {};
-
     const res = createResponse(expectedScopes);
 
     jwtAuthz(expectedScopes)(req, res);
@@ -72,7 +70,7 @@ describe('should 403 and "Insufficient scope"', () => {
     });
   });
 
-  it('when scope in user does not exist and expectedScopes are not empty', () => {
+  it('when user.scope does not exist and expectedScopes are not empty', () => {
     const expectedScopes = ['read:user'];
     const req = {
       user: {}
@@ -80,6 +78,21 @@ describe('should 403 and "Insufficient scope"', () => {
 
     const res = createResponse(expectedScopes);
     jwtAuthz(expectedScopes)(req, res);
+
+    res.assert();
+  });
+
+  it('when user.scope is missing some of the expectedScopes and options.checkAllScopes is true', () => {
+    const expectedScopes = ['read:user', 'write:user', 'delete:user'];
+    const req = {
+      user: {
+        // This user is missing 'delete:user'
+        scope: 'read:user write:user'
+      }
+    };
+
+    const res = createResponse(expectedScopes);
+    jwtAuthz(expectedScopes, { checkAllScopes: true })(req, res);
 
     res.assert();
   });
@@ -94,7 +107,21 @@ describe('should 403 and "Insufficient scope"', () => {
     res.assert();
   });
 
-  it('when scope in user is not string and expectedScopes are not empty', () => {
+  it('when user.scope is an empty array and expectedScopes are not empty', () => {
+    const expectedScopes = ['read:user'];
+    const req = {
+      user: {
+        scope: []
+      }
+    };
+
+    const res = createResponse(expectedScopes);
+    jwtAuthz(expectedScopes)(req, res);
+
+    res.assert();
+  });
+
+  it('when user.scope is undefined and expectedScopes are not empty', () => {
     const expectedScopes = ['read:user'];
     const req = {
       user: {}
@@ -112,7 +139,7 @@ describe('should call next', () => {
     jwtAuthz([])(null, null, done);
   });
 
-  it('when scope in user has one of expectedScopes', done => {
+  it('when user.scope is a string and contains the expectedScope', done => {
     const req = {
       user: {
         scope: 'write:user read:user'
@@ -120,5 +147,39 @@ describe('should call next', () => {
     };
 
     jwtAuthz(['read:user'])(req, null, done);
+  });
+
+  it('when user.scope is an array and contains the expectedScope', done => {
+    const req = {
+      user: {
+        scope: ['write:user', 'read:user']
+      }
+    };
+
+    jwtAuthz(['read:user'])(req, null, done);
+  });
+
+  it('when user.scope contains only one of the expectedScopes', done => {
+    const req = {
+      user: {
+        scope: 'write:user'
+      }
+    };
+
+    jwtAuthz(['read:user', 'write:user'])(req, null, done);
+  });
+
+  it('when user.scope has all the expectedScopes and options.checkAllScopes is `true`', done => {
+    const req = {
+      user: {
+        scope: ['read:user', 'write:user', 'delete:user']
+      }
+    };
+
+    jwtAuthz(['read:user', 'write:user'], { checkAllScopes: true })(
+      req,
+      null,
+      done
+    );
   });
 });

@@ -23,15 +23,53 @@ app.get('/users',
   function(req, res) { ... });
 ```
 
-The JWT must have a `scope` claim and it must be a string that specifies permissions separated by spaces. For example:
+If multiple scopes are provided, the user must have _any_ the required scopes.
+
+```javascript
+app.post('/users',
+  jwt({ secret: 'shared_secret' }),
+  jwtAuthz([ 'read:users', 'write:users' ], {}),
+  function(req, res) { ... });
+
+// This user will be denied access
+var authorizedUser = {
+  scope: 'read:users'
+};
+```
+
+To check that the user has _all_ the scopes provided, use the `checkAllScopes: true` option:
+
+```javascript
+app.post('/users',
+  jwt({ secret: 'shared_secret' }),
+  jwtAuthz([ 'read:users', 'write:users' ], { checkAllScopes: true }),
+  function(req, res) { ... });
+
+// This user will have access
+var authorizedUser = {
+  scope: 'read:users write:users'
+};
+
+// This user will NOT have access
+var unauthorizedUser = {
+  scope: 'read:users'
+};
+```
+
+The JWT must have a `scope` claim and it must either be a string of space-separated permissions or an array of strings. For example:
 
 ```
+// String:
 "write:users read:users"
+
+// Array:
+["write:users", "read:users"]
 ```
 
 ## Options
 
 - `failWithError`: When set to `true`, will forward errors to `next` instead of ending the response directly. Defaults to `false`.
+- `checkAllScopes`: When set to `true`, all the expected scopes will be checked against the user's scopes. Defaults to `false`.
 
 ## Issue Reporting
 
