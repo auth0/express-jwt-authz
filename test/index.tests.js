@@ -82,14 +82,14 @@ describe('should 403 and "Insufficient scope"', () => {
     res.assert();
   });
 
-  it('when using a customKey and invalid scopes', () => {
+  it('when using a customScopeKey and invalid scopes', () => {
     const expectedScopes = ['read:user'];
     const req = {
       user: {}
     };
 
     const res = createResponse(expectedScopes);
-    jwtAuthz(expectedScopes, { customKey: 'permissions' })(req, res);
+    jwtAuthz(expectedScopes, { customScopeKey: 'permissions' })(req, res);
 
     res.assert();
   });
@@ -195,14 +195,14 @@ describe('should call next', () => {
     );
   });
 
-  it('when using a customKey', done => {
+  it('when using a customScopeKey', done => {
     const req = {
       user: {
         permissions: 'write:user'
       }
     };
 
-    jwtAuthz(['read:user', 'write:user'], { customKey: 'permissions' })(
+    jwtAuthz(['read:user', 'write:user'], { customScopeKey: 'permissions' })(
       req,
       null,
       done
