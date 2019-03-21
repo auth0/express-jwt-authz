@@ -1,3 +1,7 @@
+# 2.3.0
+
+- Added support for a custom scope key (`customScopeKey`)
+
 # 2.2.0
 
 - Added support for array scopes
