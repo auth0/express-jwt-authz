@@ -208,4 +208,18 @@ describe('should call next', () => {
       done
     );
   });
+
+  it('when using a customScopeKey that is an array', done => {
+    const req = {
+      user: {
+        permissions: ['write:user']
+      }
+    };
+
+    jwtAuthz(['read:user', 'write:user'], { customScopeKey: 'permissions' })(
+      req,
+      null,
+      done
+    );
+  });
 });
