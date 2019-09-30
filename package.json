@@ -3,6 +3,7 @@
   "version": "2.3.0",
   "description": "Validate a JWTs scope to authorize access to an endpoint",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "mocha"
   },
@@ -37,6 +38,7 @@
     "node": ">=6"
   },
   "peerDependencies": {
-    "express": "^4.0.0"
+    "express": "^4.0.0",
+    "@types/express": "^4.0.0"
   }
 }
