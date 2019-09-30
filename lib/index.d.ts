@@ -4,7 +4,7 @@ export default jwtAuthz;
 
 declare function jwtAuthz(
   expectedScopes: jwtAuthz.AuthzScopes,
-  options: jwtAuthz.AuthzOptions
+  options?: jwtAuthz.AuthzOptions
 ): express.Handler;
 
 declare namespace jwtAuthz {
