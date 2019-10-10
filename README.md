@@ -31,7 +31,7 @@ app.post('/users',
   jwtAuthz([ 'read:users', 'write:users' ], {}),
   function(req, res) { ... });
 
-// This user will be denied access
+// This user will be granted access
 var authorizedUser = {
   scope: 'read:users'
 };
