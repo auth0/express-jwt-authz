@@ -23,7 +23,7 @@ app.get('/users',
   function(req, res) { ... });
 ```
 
-If multiple scopes are provided, the user must have _any_ the required scopes.
+If multiple scopes are provided, the user must have _at least one_ of the specified scopes.
 
 ```javascript
 app.post('/users',
