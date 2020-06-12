@@ -13,6 +13,7 @@ declare namespace jwtAuthz {
   export interface AuthzOptions {
     failWithError?: boolean;
     customScopeKey?: string;
+    customUserKey?: string;
     checkAllScopes?: boolean;
   }
 }

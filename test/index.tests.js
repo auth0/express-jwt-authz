@@ -94,6 +94,33 @@ describe('should 403 and "Insufficient scope"', () => {
     res.assert();
   });
 
+  it('when using a customUserKey and invalid scopes', () => {
+    const expectedScopes = ['read:user'];
+    const req = {
+      myUser: {}
+    };
+
+    const res = createResponse(expectedScopes);
+    jwtAuthz(expectedScopes, { customUserKey: 'myUser' })(req, res);
+
+    res.assert();
+  });
+
+  it('when using a customUserKey and customScopeKey and invalid scopes', () => {
+    const expectedScopes = ['read:user'];
+    const req = {
+      myUser: {}
+    };
+
+    const res = createResponse(expectedScopes);
+    jwtAuthz(expectedScopes, {
+      customUserKey: 'myUser',
+      customScopeKey: 'permissions'
+    })(req, res);
+
+    res.assert();
+  });
+
   it('when user.scope is missing some of the expectedScopes and options.checkAllScopes is true', () => {
     const expectedScopes = ['read:user', 'write:user', 'delete:user'];
     const req = {
@@ -207,6 +234,33 @@ describe('should call next', () => {
       null,
       done
     );
+  });
+
+  it('when using a customUserKey', done => {
+    const req = {
+      myUser: {
+        scope: 'write:user'
+      }
+    };
+
+    jwtAuthz(['read:user', 'write:user'], { customUserKey: 'myUser' })(
+      req,
+      null,
+      done
+    );
+  });
+
+  it('when using a customUserKey and customScopeKey', done => {
+    const req = {
+      myUser: {
+        permissions: 'write:user'
+      }
+    };
+
+    jwtAuthz(['read:user', 'write:user'], {
+      customUserKey: 'myUser',
+      customScopeKey: 'permissions'
+    })(req, null, done);
   });
 
   it('when using a customScopeKey that is an array', done => {
