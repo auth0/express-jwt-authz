@@ -1,3 +1,8 @@
+# 2.4.0
+
+- Added support for a custom user key (`customUserKey`)
+- Added TypeScript definitions
+
 # 2.3.0
 
 - Added support for a custom scope key (`customScopeKey`)
