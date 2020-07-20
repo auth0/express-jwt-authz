@@ -1,6 +1,6 @@
 import * as express from 'express';
 
-export default jwtAuthz;
+export = jwtAuthz;
 
 declare function jwtAuthz(
   expectedScopes: jwtAuthz.AuthzScopes,
