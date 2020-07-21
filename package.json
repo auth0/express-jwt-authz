@@ -1,6 +1,6 @@
 {
   "name": "express-jwt-authz",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Validate a JWTs scope to authorize access to an endpoint",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
