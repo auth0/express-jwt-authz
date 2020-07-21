@@ -1,3 +1,7 @@
+# 2.4.1
+
+- Fixed TS export to model CommonJS
+
 # 2.4.0
 
 - Added support for a custom user key (`customUserKey`)
