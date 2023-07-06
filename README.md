@@ -70,9 +70,8 @@ The JWT must have a `scope` claim and it must either be a string of space-separa
 
 - `failWithError`: When set to `true`, will forward errors to `next` instead of ending the response directly. Defaults to `false`.
 - `checkAllScopes`: When set to `true`, all the expected scopes will be checked against the user's scopes. Defaults to `false`.
-- `customUserKey`: The property name to check for the scope key. By default, permissions are checked against `req.user`, but you can change it to be `req.myCustomUserKey` with this option. Defaults to `user`.
+- `customUserKey`: The property name to check for the scope key. By default, permissions are checked against `req.user` (for `express-jwt` < 7) or `req.auth` (for `express-jwt` >= 7), but you can change it to be `req.myCustomUserKey` with this option. Defaults to `user` (with a fallback to `auth`).
 - `customScopeKey`: The property name to check for the actual scope. By default, permissions are checked against `user.scope`, but you can change it to be `user.myCustomScopeKey` with this option. Defaults to `scope`.
-
 
 ## Issue Reporting
 

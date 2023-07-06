@@ -236,6 +236,16 @@ describe('should call next', () => {
     );
   });
 
+  it('when user is on req.auth (for express-jwt@7)', done => {
+    const req = {
+      auth: {
+        scope: 'write:user'
+      }
+    };
+
+    jwtAuthz(['read:user', 'write:user'])(req, null, done);
+  });
+
   it('when using a customUserKey', done => {
     const req = {
       myUser: {
