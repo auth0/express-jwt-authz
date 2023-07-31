@@ -12,11 +12,13 @@ Validate a JWTs `scope` to authorize access to an endpoint.
 
 Use together with [express-jwt](https://github.com/auth0/express-jwt) to both validate a JWT and make sure it has the correct permissions to call an endpoint.
 
+:note: `express-jwt` sets the decoded JWT payload on `req.auth` since version `6.0.0`, so make sure to set `customUserKey: 'auth'` in the options provided to `express-jwt-authz` if you are using that version or newer.
+
 ```javascript
 var jwt = require('express-jwt');
 var jwtAuthz = require('express-jwt-authz');
 
-var options = {};
+var options = { customUserKey: 'auth' };
 app.get('/users',
   jwt({ secret: 'shared_secret' }),
   jwtAuthz([ 'read:users' ], options),
@@ -26,9 +28,10 @@ app.get('/users',
 If multiple scopes are provided, the user must have _at least one_ of the specified scopes.
 
 ```javascript
+var options = { customUserKey: 'auth' };
 app.post('/users',
   jwt({ secret: 'shared_secret' }),
-  jwtAuthz([ 'read:users', 'write:users' ], {}),
+  jwtAuthz([ 'read:users', 'write:users' ], options),
   function(req, res) { ... });
 
 // This user will be granted access
@@ -42,7 +45,7 @@ To check that the user has _all_ the scopes provided, use the `checkAllScopes: t
 ```javascript
 app.post('/users',
   jwt({ secret: 'shared_secret' }),
-  jwtAuthz([ 'read:users', 'write:users' ], { checkAllScopes: true }),
+  jwtAuthz([ 'read:users', 'write:users' ], { checkAllScopes: true, customUserKey: 'auth' }),
   function(req, res) { ... });
 
 // This user will have access
@@ -72,7 +75,6 @@ The JWT must have a `scope` claim and it must either be a string of space-separa
 - `checkAllScopes`: When set to `true`, all the expected scopes will be checked against the user's scopes. Defaults to `false`.
 - `customUserKey`: The property name to check for the scope key. By default, permissions are checked against `req.user`, but you can change it to be `req.myCustomUserKey` with this option. Defaults to `user`.
 - `customScopeKey`: The property name to check for the actual scope. By default, permissions are checked against `user.scope`, but you can change it to be `user.myCustomScopeKey` with this option. Defaults to `scope`.
-
 
 ## Issue Reporting
 
