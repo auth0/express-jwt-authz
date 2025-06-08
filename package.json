@@ -1,11 +1,18 @@
 {
   "name": "express-jwt-authz",
-  "version": "2.4.1",
+  "version": "3.0.0",
   "description": "Validate a JWTs scope to authorize access to an endpoint",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "mocha"
+    "test": "tsx ./node_modules/.bin/mocha 'test/**/*.ts'",
+    "test:express4": "npm install --no-save express@^4.0.0 && npm run test",
+    "test:express5": "npm install --no-save express@^5.0.0 && npm run test",
+    "pretest:express": "npm ci",
+    "test:all-express": "npm run pretest:express && npm run test:express4 && npm run test:express5",
+    "build": "tsc",
+    "coverage": "c8 tsx ./node_modules/.bin/mocha 'test/**/*.ts'",
+    "prepare": "husky"
   },
   "files": [
     "lib"
@@ -26,11 +33,18 @@
   },
   "homepage": "https://github.com/auth0/express-jwt-authz#readme",
   "devDependencies": {
-    "chai": "^4.2.0",
-    "husky": "^1.1.4",
-    "mocha": "^5.2.0",
-    "prettier": "^1.14.3",
-    "pretty-quick": "^1.8.0"
+    "@types/chai": "^5.2.1",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.15.2",
+    "c8": "^10.1.3",
+    "chai": "^5.2.0",
+    "husky": "^9.1.7",
+    "mocha": "^11.1.0",
+    "node-mocks-http": "^1.17.0",
+    "prettier": "^3.5.3",
+    "pretty-quick": "^4.1.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
   },
   "husky": {
     "hooks": {
@@ -38,10 +52,9 @@
     }
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=14"
   },
   "peerDependencies": {
-    "express": "^4.0.0",
-    "@types/express": "^4.0.0"
+    "express": "^4.0.0 || ^5.0.0"
   }
 }

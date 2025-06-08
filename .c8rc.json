@@ -1,0 +1,7 @@
+{
+  "all": true,
+  "include": ["src/index.ts"],
+  "exclude": ["coverage/", "test/", "node_modules/"],
+  "reporter": ["text-summary", "text"],
+  "report-dir": "./coverage"
+}

@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json", // Inherit settings from the main config
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src/**/*", "test/**/*"]
+}
