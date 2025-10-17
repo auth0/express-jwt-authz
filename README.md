@@ -1,3 +1,5 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/auth0/express-jwt-authz)
+
 # express-jwt-authz ![](https://travis-ci.org/auth0/express-jwt-authz.svg?branch=master)
 
 Validate a JWTs `scope` to authorize access to an endpoint.
