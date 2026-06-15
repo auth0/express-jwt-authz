@@ -27,7 +27,7 @@
   "homepage": "https://github.com/auth0/express-jwt-authz#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "husky": "^1.1.4",
+    "husky": "^9.1.7",
     "mocha": "^5.2.0",
     "prettier": "^1.14.3",
     "pretty-quick": "^1.8.0"
